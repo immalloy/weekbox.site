@@ -15,9 +15,7 @@ export default function HomePage() {
   return (
     <main>
       <section aria-labelledby="status-title">
-        <p className="eyebrow">WEEKBOX</p>
-        <h1 id="status-title">Website in progress.</h1>
-        <p className="subtle">A calmer place for the week ahead.</p>
+        <h1 id="status-title">Coming soon.</h1>
         <p className="counter" aria-live="polite">
           {visits === null ? 'Loading visits…' : `${visits.toLocaleString()} ${visits === 1 ? 'visit' : 'visits'}`}
         </p>
