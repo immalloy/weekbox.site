@@ -40,7 +40,6 @@ export function formatDiagnosticEmbed(report: DiagnosticReport) {
       { name: 'Error', value: limit(safe.errorMessage, 800) },
       { name: 'Stack trace', value: `\`\`\`\n${limit(safe.stackTrace, 780)}\n\`\`\`` }
     ],
-    footer: { text: 'Sent with user consent' },
     timestamp: new Date().toISOString()
   };
 }
