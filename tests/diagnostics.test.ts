@@ -27,6 +27,7 @@ describe('diagnostic reports', () => {
     expect(response.status).toBe(202);
     expect(fetchMock).toHaveBeenCalledOnce();
     const [, options] = fetchMock.mock.calls[0] as [string, { body: string }];
+    expect(options.body).toContain('"embeds"');
     expect(options.body).toContain('[REDACTED_WINDOWS_PATH]');
     expect(options.body).not.toContain('Casey');
   });

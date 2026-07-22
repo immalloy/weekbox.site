@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { diagnosticSchema, formatDiagnosticReport } from '../../../lib/diagnostics';
+import { diagnosticSchema, formatDiagnosticEmbed } from '../../../lib/diagnostics';
 import { allowsRequest } from '../../../lib/rate-limit';
 
 const MAX_BODY_BYTES = 12_000;
@@ -31,7 +31,7 @@ export async function POST(request: Request) {
   if (!validWebhook(process.env.DISCORD_WEBHOOK_URL)) return NextResponse.json({ error: 'Diagnostic reporting is not configured.' }, { status: 503 });
 
   try {
-    const response = await fetch(process.env.DISCORD_WEBHOOK_URL, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ content: formatDiagnosticReport(parsed.data), allowed_mentions: { parse: [] } }) });
+    const response = await fetch(process.env.DISCORD_WEBHOOK_URL, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ embeds: [formatDiagnosticEmbed(parsed.data)], allowed_mentions: { parse: [] } }) });
     if (!response.ok) return NextResponse.json({ error: 'Could not deliver diagnostic report.' }, { status: 502 });
   } catch { return NextResponse.json({ error: 'Could not deliver diagnostic report.' }, { status: 502 }); }
   return NextResponse.json({ accepted: true }, { status: 202 });
